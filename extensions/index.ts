@@ -28,7 +28,7 @@ function runProxiedHook(
 }
 
 const COMMANDS = [
-  "assimilate", "babysit", "call", "cleanup", "contrib", "doctor", "forever", "help", "observe", "plan", "plugins", "project-install", "resume", "retrospect", "user-install", "yolo"
+  "assimilate", "babysit", "call", "check-forbidden-markers", "cleanup", "contrib", "doctor", "forever", "help", "observe", "plan", "plugins", "project-install", "resume", "retrospect", "user-install", "yolo"
 ] as const;
 
 export function activate(api: unknown): void {
