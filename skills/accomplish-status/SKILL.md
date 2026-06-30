@@ -29,11 +29,17 @@ Where `OPENCODE_CONFIG_DIR` is resolved from the `OPENCODE_CONFIG_DIR` environme
 Read the SDK version from `versions.json` to ensure version compatibility:
 
 ```bash
-SDK_VERSION=$(node -e "try{const fs=require('fs');const probes=['./plugins/babysitter-opencode/versions.json','./node_modules/@a5c-ai/babysitter-opencode/versions.json'];for(const probe of probes){if(fs.existsSync(probe)){console.log(JSON.parse(fs.readFileSync(probe,'utf8')).sdkVersion||'latest');process.exit(0)}}console.log('latest')}catch{console.log('latest')}")
+SDK_VERSION=$(node -e "try{const fs=require('fs');const probes=['./plugins/babysitter-unified/versions.json','./node_modules/@a5c-ai/babysitter-opencode/versions.json'];for(const probe of probes){if(fs.existsSync(probe)){console.log(JSON.parse(fs.readFileSync(probe,'utf8')).sdkVersion||'latest');process.exit(0)}}console.log('latest')}catch{console.log('latest')}")
 npm i -g @a5c-ai/babysitter-sdk@$SDK_VERSION
 
-CLI="npx -y @a5c-ai/babysitter-sdk@$SDK_VERSION"
+if command -v babysitter >/dev/null 2>&1 && babysitter --version >/dev/null 2>&1; then
+  CLI="babysitter"
+else
+  CLI="npm exec --yes --package @a5c-ai/babysitter-sdk@$SDK_VERSION -- babysitter"
+fi
 ```
+
+If a stale or broken global shim fails with `MODULE_NOT_FOUND`, repair it with `npm rm -g @a5c-ai/babysitter @a5c-ai/babysitter-sdk && npm i -g @a5c-ai/babysitter-sdk@$SDK_VERSION`, then re-run `babysitter --version`.
 
 ## Instructions
 
